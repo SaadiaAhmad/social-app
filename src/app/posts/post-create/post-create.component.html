@@ -1,9 +1,9 @@
 <h2>Post Create:</h2>
 
-<textarea rows="5" [(ngModel)]="userPost"></textarea>
+<textarea matInput rows="5" [(ngModel)]="userPost"></textarea>
 
 <hr>
 
-<button (click)="onSubmitClick()">Save Post</button>
+<button mat-raised-button color="primary" (click)="onSubmitClick()">Save Post</button>
 
 <p>{{ newPost }}</p>
