@@ -1,8 +1,12 @@
 :host {
     display: block;
-    margin-top: 16px;
+    margin: 16px;
 }
 
 .info-text {
     text-align: center;
+}
+
+mat-expansion-panel {
+    margin-top: 16px;
 }

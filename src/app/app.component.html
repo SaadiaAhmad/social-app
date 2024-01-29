@@ -1,6 +1,6 @@
 <app-header></app-header>
 <main>
-    <app-post-create (postCreated)="onPostCreate($event)"></app-post-create>
+    <app-post-create (postCreated)="onPostCreate($event)" (resetPosts)="onResetPosts()"></app-post-create>
     <app-post-list [posts]="addedPosts"></app-post-list>
 </main>
 

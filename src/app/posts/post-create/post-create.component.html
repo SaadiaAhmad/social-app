@@ -1,13 +1,24 @@
-<h2>Post Create:</h2>
-
 <mat-card>
-    <mat-form-field>
-        <input matInput type="text" [(ngModel)]="enteredTitle">
-    </mat-form-field>  
-    <mat-form-field>
-        <textarea matInput rows="5" [(ngModel)]="enteredContent"></textarea>
-    </mat-form-field>
-    <button mat-raised-button color="primary" (click)="onSubmitClick()">Save Post</button>
+    <!-- Using a template-driven form here. This is diferent than a reactive form. -->
+    <!-- Reactive forms are synchronous and use observables whereas  -->
+    <!-- Template forms are asynchronous and use direct access to the data using directives -->
+    <form (submit)="onSubmitClick(postForm)" #postForm="ngForm">
+        <mat-form-field>
+            <input matInput #title="ngModel" type="text" name="enteredTitle" ngModel required>
+            <mat-error *ngIf="title.invalid">Please enter a title</mat-error>
+        </mat-form-field>  
+        <mat-form-field>
+            <textarea matInput #content="ngModel" rows="5" name="enteredContent" ngModel required></textarea>
+            <mat-error *ngIf="content.invalid">Please enter content</mat-error>
+        </mat-form-field>
+        <button mat-raised-button 
+            color="primary" 
+            type="submit">Save Post
+        </button>
+        <button mat-raised-button 
+            color="secondary" 
+            type="button"
+            (click)="onResetClick()">Reset
+        </button>
+    </form>
 </mat-card>
-
-<hr>

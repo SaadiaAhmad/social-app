@@ -7,10 +7,16 @@ import { Post } from './posts/posts.model';
   styleUrl: './app.component.scss'
 })
 export class AppComponent {
-  title = 'mean-course';
-  addedPosts: Post[];
+  addedPosts: Post[] = [];
 
   onPostCreate(post) {
     this.addedPosts.push(post);
+  }
+
+  onResetPosts() {
+    this.addedPosts = [];
+    this.addedPosts.length = 0;
+    
+    console.log(this.addedPosts, this.addedPosts.length);
   }
 }
