@@ -10,6 +10,8 @@ import { MatCardModule } from '@angular/material/card';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { HeaderComponent } from './header/header.component';
 import { MatIconModule } from '@angular/material/icon';
+import { PostListComponent } from './posts/post-list/post-list.component';
+import { MatExpansionModule } from '@angular/material/expansion';
 
 @NgModule({
   imports: [ 
@@ -20,12 +22,14 @@ import { MatIconModule } from '@angular/material/icon';
     MatButtonModule, 
     MatCardModule,
     MatToolbarModule,
-    MatIconModule
+    MatIconModule,
+    MatExpansionModule
   ],
   declarations: [
     AppComponent, 
     PostCreateComponent,
-    HeaderComponent
+    HeaderComponent,
+    PostListComponent
   ],
   bootstrap: [AppComponent]
 })
