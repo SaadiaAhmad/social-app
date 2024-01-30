@@ -16,6 +16,7 @@ export class PostCreateComponent {
   onSubmitClick(form: NgForm) {
     if(form.invalid) return;
     const post: Post = {
+      id: null,
       title: form.value.enteredTitle || 'Title',
       content: form.value.enteredContent || 'Content'
     };

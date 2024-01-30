@@ -12,6 +12,7 @@ import { HeaderComponent } from './header/header.component';
 import { MatIconModule } from '@angular/material/icon';
 import { PostListComponent } from './posts/post-list/post-list.component';
 import { MatExpansionModule } from '@angular/material/expansion';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   imports: [ 
@@ -23,7 +24,8 @@ import { MatExpansionModule } from '@angular/material/expansion';
     MatCardModule,
     MatToolbarModule,
     MatIconModule,
-    MatExpansionModule
+    MatExpansionModule,
+    HttpClientModule
   ],
   declarations: [
     AppComponent, 
