@@ -1,6 +1,10 @@
 const express = require('express');
+const bodyParser = require('body-parser');
 
 const app = express();
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: false}));
 
 app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
@@ -15,7 +19,7 @@ app.use((req, res, next) => {
     next();
 })
 
-app.use('/api/posts', (req, res, next) => {
+app.get('/api/posts', (req, res, next) => {
     const posts = [
         {
             id: '123123',
@@ -32,6 +36,12 @@ app.use('/api/posts', (req, res, next) => {
         message: 'Get Posts Successful',
         posts: posts
     })
+});
+
+app.post('/api/posts', (req, res, next) => {
+    res.status(201).json({
+        message: 'Post added!'
+    });
 });
 
 module.exports = app;
