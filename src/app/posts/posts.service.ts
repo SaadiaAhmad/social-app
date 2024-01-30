@@ -15,7 +15,6 @@ export class PostsService {
   getPosts() {
     this.httpClient.get<{message: string, posts: Post[]}>('http://localhost:3000/api/posts')
       .subscribe((resp) => {
-        console.log(resp);
         this.posts = resp.posts;
         this.updatedPosts.next([...this.posts]);
       });
@@ -32,7 +31,10 @@ export class PostsService {
       content: post.content
     };
 
-    this.posts.push(newPost);
-    this.updatedPosts.next([...this.posts]);
+    this.httpClient.post<{message: string}>('http://localhost:3000/api/posts', newPost)
+      .subscribe((resp) => {
+        this.posts.push(newPost);
+        this.updatedPosts.next([...this.posts]);
+      });
   }
 }
