@@ -4,11 +4,26 @@
     <!-- Template forms are asynchronous and use direct access to the data using directives -->
     <form (submit)="onSubmitClick(postForm)" #postForm="ngForm">
         <mat-form-field>
-            <input matInput #title="ngModel" type="text" name="enteredTitle" ngModel required>
+            <mat-label>Post Title</mat-label>
+            <input 
+                matInput 
+                #title="ngModel" 
+                type="text" 
+                name="enteredTitle" 
+                ngModel 
+                required>
             <mat-error *ngIf="title.invalid">Please enter a title</mat-error>
         </mat-form-field>  
         <mat-form-field>
-            <textarea matInput #content="ngModel" rows="5" name="enteredContent" ngModel required></textarea>
+            <mat-label>Post Content</mat-label>
+            <textarea 
+                matInput 
+                #content="ngModel" 
+                rows="5" 
+                name="enteredContent" 
+                ngModel 
+                required>
+            </textarea>
             <mat-error *ngIf="content.invalid">Please enter content</mat-error>
         </mat-form-field>
         <button mat-raised-button 
