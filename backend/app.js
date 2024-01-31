@@ -53,7 +53,25 @@ app.post('/api/posts', (req, res, next) => {
             })
         )
         .catch((err) => res.status(500).json({
-            message: 'Error when trying to post: ' + err
+            message: 'Error when trying to create post: ' + err
+            })
+        )
+});
+
+app.put('/api/posts/:id', (req, res, next) => {
+    const post = new Post({
+        _id: req.params.id,
+        title: req.body.title,
+        content: req.body.content
+    });
+
+    Post.updateOne({ _id: req.params.id }, post)
+        .then((resp) => res.status(200).json({
+            message: 'Post updated!'
+            })
+        )
+        .catch((err) => res.status(500).json({
+            message: 'Error when trying to update post: ' + err
             })
         )
 });
