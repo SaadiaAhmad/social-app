@@ -29,23 +29,15 @@ app.use((req, res, next) => {
 app.get('/api/posts', (req, res, next) => {
     Post.find()
         .then((data) => {
-            console.log(transformData(data));
             res.status(200).json({
                 message: 'Get Posts Successful',
                 posts: data
             });
         })
-        .catch(() => {});
-
-    function transformData(data) {
-        return data.map((item) => {
-            return {
-                id: item._id,
-                title: item.title,
-                content: item.content
-            }
-        });
-    }
+        .catch((err) => res.status(500).json({
+            message: 'Error when trying to fetch posts: ' + err
+            })
+        );
 });
 
 app.post('/api/posts', (req, res, next) => {
@@ -54,12 +46,29 @@ app.post('/api/posts', (req, res, next) => {
         content: req.body.content
     });
 
-    console.log(post);
-    post.save();
+    post.save()
+        .then((resp) => res.status(201).json({
+            message: 'Post added!'
+            })
+        )
+        .catch((err) => res.status(500).json({
+            message: 'Error when trying to post: ' + err
+            })
+        )
 
-    res.status(201).json({
-        message: 'Post added!'
-    });
+    
+});
+
+app.delete('/api/posts/:id', (req, res) => {
+    Post.deleteOne({ _id: req.params.id })
+        .then((resp) => res.status(200).json({
+                message: 'Post deleted!'
+            })
+        )
+        .catch((err) => res.status(500).json({
+            message: 'Error when trying to delete: ' + err
+            })
+        );
 });
 
 module.exports = app;

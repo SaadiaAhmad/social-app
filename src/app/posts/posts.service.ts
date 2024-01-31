@@ -48,4 +48,13 @@ export class PostsService {
         this.updatedPosts.next([...this.posts]);
       });
   }
+
+  deletePost(postId: string) {
+    this.httpClient.delete<{message: string}>(`http://localhost:3000/api/posts/${postId}`)
+    .subscribe((resp) => {
+      const deletedItemIndex = this.posts.findIndex((post) => post.id === postId);
+      this.posts.splice(deletedItemIndex, 1);
+      this.updatedPosts.next([...this.posts]);
+    });
+  }
 }
