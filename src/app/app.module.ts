@@ -13,9 +13,12 @@ import { MatIconModule } from '@angular/material/icon';
 import { PostListComponent } from './posts/post-list/post-list.component';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { HttpClientModule } from '@angular/common/http';
+import { AppRoutingModule } from './app-routing.module';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   imports: [ 
+    AppRoutingModule,
     BrowserModule, 
     FormsModule, 
     BrowserAnimationsModule, 
@@ -25,7 +28,8 @@ import { HttpClientModule } from '@angular/common/http';
     MatToolbarModule,
     MatIconModule,
     MatExpansionModule,
-    HttpClientModule
+    HttpClientModule,
+    RouterModule
   ],
   declarations: [
     AppComponent, 
