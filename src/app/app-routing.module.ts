@@ -13,7 +13,7 @@ const routes: Routes = [
         component: PostCreateComponent
     },
     {
-        path: 'edit',
+        path: 'edit/:id',
         component: PostCreateComponent
     }
 ];

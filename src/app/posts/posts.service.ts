@@ -44,6 +44,21 @@ export class PostsService {
       });
   }
 
+  updatePost(post: Post) {
+    const updatedPost: Post = {
+      id: post.id,
+      title: post.title,
+      content: post.content
+    };
+
+    this.httpClient.put<{message: string}>(`http://localhost:3000/api/posts/${post.id}`, updatedPost)
+      .subscribe((resp) => {
+        // updatedPost.id = resp.id;
+        // this.posts.push(updatedPost);
+        // this.updatedPosts.next([...this.posts]);
+      });
+  }
+
   deletePost(postId: string) {
     this.httpClient.delete<{message: string}>(`http://localhost:3000/api/posts/${postId}`)
     .subscribe((resp) => {
@@ -52,6 +67,10 @@ export class PostsService {
       //const postsUpdated = this.posts.filter(post => post.id !== postId); //This will not work when we delete more than one posts in one go/app load
       this.updatedPosts.next([...this.posts]);
     });
+  }
+
+  getPost(id: string) {
+    return {...this.posts.find((post) => post.id === id)}
   }
 
   private mapPostResponse(postItem: any) {
