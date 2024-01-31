@@ -42,8 +42,9 @@ export class PostsService {
       content: post.content
     };
 
-    this.httpClient.post<{message: string}>('http://localhost:3000/api/posts', newPost)
+    this.httpClient.post<{message: string, id: string}>('http://localhost:3000/api/posts', newPost)
       .subscribe((resp) => {
+        newPost.id = resp.id;
         this.posts.push(newPost);
         this.updatedPosts.next([...this.posts]);
       });
@@ -54,6 +55,7 @@ export class PostsService {
     .subscribe((resp) => {
       const deletedItemIndex = this.posts.findIndex((post) => post.id === postId);
       this.posts.splice(deletedItemIndex, 1);
+      //const postsUpdated = this.posts.filter(post => post.id !== postId); //This will not work when we delete more than one posts in one go/app load
       this.updatedPosts.next([...this.posts]);
     });
   }

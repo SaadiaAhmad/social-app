@@ -48,7 +48,8 @@ app.post('/api/posts', (req, res, next) => {
 
     post.save()
         .then((resp) => res.status(201).json({
-            message: 'Post added!'
+            message: 'Post added!',
+            id: resp._id
             })
         )
         .catch((err) => res.status(500).json({
