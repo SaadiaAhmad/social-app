@@ -27,22 +27,25 @@ app.use((req, res, next) => {
 })
 
 app.get('/api/posts', (req, res, next) => {
-    const posts = [
-        {
-            id: '123123',
-            title: 'First post from backend',
-            content: 'This is coming from the server app as I work on building a MEAN app!'
-        },
-        {
-            id: '456456',
-            title: 'Second post from backend',
-            content: 'This is also coming from the server app as I work on building a MEAN app!'
-        },
-    ]
-    res.status(200).json({
-        message: 'Get Posts Successful',
-        posts: posts
-    })
+    Post.find()
+        .then((data) => {
+            console.log(transformData(data));
+            res.status(200).json({
+                message: 'Get Posts Successful',
+                posts: data
+            });
+        })
+        .catch(() => {});
+
+    function transformData(data) {
+        return data.map((item) => {
+            return {
+                id: item._id,
+                title: item.title,
+                content: item.content
+            }
+        });
+    }
 });
 
 app.post('/api/posts', (req, res, next) => {
