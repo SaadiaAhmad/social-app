@@ -56,8 +56,6 @@ app.post('/api/posts', (req, res, next) => {
             message: 'Error when trying to post: ' + err
             })
         )
-
-    
 });
 
 app.delete('/api/posts/:id', (req, res) => {

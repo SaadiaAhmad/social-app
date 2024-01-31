@@ -16,13 +16,7 @@ export class PostsService {
     this.httpClient.get<{message: string, posts: any[]}>('http://localhost:3000/api/posts')
       .pipe(
         map((resp) => {
-          return resp.posts.map((postItem) => {
-            return {
-                id: postItem._id,
-                title: postItem.title,
-                content: postItem.content
-            }
-          });
+          return resp.posts.map((postItem) => this.mapPostResponse(postItem));
         })
       )
       .subscribe((mappedPosts) => {
@@ -58,5 +52,13 @@ export class PostsService {
       //const postsUpdated = this.posts.filter(post => post.id !== postId); //This will not work when we delete more than one posts in one go/app load
       this.updatedPosts.next([...this.posts]);
     });
+  }
+
+  private mapPostResponse(postItem: any) {
+    return {
+      id: postItem._id,
+      title: postItem.title,
+      content: postItem.content
+  }
   }
 }
