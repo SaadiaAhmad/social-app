@@ -1,8 +1,9 @@
 <mat-card>
+    <mat-spinner *ngIf="isLoading"></mat-spinner>
     <!-- Using a template-driven form here. This is diferent than a reactive form. -->
     <!-- Reactive forms are synchronous and use observables whereas  -->
     <!-- Template forms are asynchronous and use direct access to the data using directives -->
-    <form (submit)="onSubmitClick(postForm)" #postForm="ngForm">
+    <form (submit)="onSubmitClick(postForm)" #postForm="ngForm" *ngIf="!isLoading">
         <mat-form-field>
             <mat-label>Post Title</mat-label>
             <input 

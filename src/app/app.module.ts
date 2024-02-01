@@ -15,6 +15,7 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { RouterModule } from '@angular/router';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @NgModule({
   imports: [ 
@@ -29,7 +30,8 @@ import { RouterModule } from '@angular/router';
     MatIconModule,
     MatExpansionModule,
     HttpClientModule,
-    RouterModule
+    RouterModule,
+    MatProgressSpinnerModule
   ],
   declarations: [
     AppComponent, 
