@@ -17,3 +17,8 @@ button {
     width: 230px;
     margin: auto;
 }
+
+input[type=file] {
+    display: none;
+    // visibility: hidden;
+}

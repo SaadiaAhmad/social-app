@@ -27,6 +27,12 @@
             </textarea>
             <mat-error *ngIf="content.invalid">Please enter content</mat-error>
         </mat-form-field>
+        <div>
+            <button mat-stroked-button type="button" color="accent" (click)="filePicker.click()">
+                Pick Image
+            </button>
+            <input type="file" #filePicker>
+        </div>
         <button mat-raised-button 
             color="primary" 
             type="submit">Save Post
