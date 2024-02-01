@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Post } from './posts.model';
 import { Subject, map } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +11,7 @@ export class PostsService {
   private posts: Post[] = [];
   private updatedPosts = new Subject<Post[]>();
 
-  constructor(private httpClient: HttpClient) {}
+  constructor(private httpClient: HttpClient, private router: Router) {}
 
   getPosts() {
     this.httpClient.get<{message: string, posts: any[]}>('http://localhost:3000/api/posts')
@@ -41,6 +42,7 @@ export class PostsService {
         newPost.id = resp.id;
         this.posts.push(newPost);
         this.updatedPosts.next([...this.posts]);
+        this.router.navigate(['/']);
       });
   }
 
@@ -53,6 +55,7 @@ export class PostsService {
 
     this.httpClient.put<{message: string}>(`http://localhost:3000/api/posts/${post.id}`, updatedPost)
       .subscribe((resp) => {
+        this.router.navigate(['/']);
         /* --- This is not really needed because the list component will call all the posts again anyway ---*/
         // const oldPostIndex = this.posts.findIndex((post) => post.id === updatedPost.id);
         // const tempPosts = [...this.posts];

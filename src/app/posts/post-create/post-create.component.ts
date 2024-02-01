@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Post } from '../posts.model';
-import { NgForm } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { PostsService } from '../posts.service';
-import { ActivatedRoute } from '@angular/router';
-import { Router } from '@angular/router';
+import { ActivatedRoute, ParamMap } from '@angular/router';
 
 @Component({
   selector: 'app-post-create',
@@ -15,57 +14,81 @@ export class PostCreateComponent implements OnInit {
   private postId: string;
   isLoading = false;
   post: Post;
+  form: FormGroup;
 
-  constructor(private postsService: PostsService, private route: ActivatedRoute, private router: Router) {}
+  constructor(private postsService: PostsService, private route: ActivatedRoute) {}
 
   ngOnInit(): void {
+    this.createForm();
+    this.initializeForm();
+  }
+
+  createForm() {
+    this.form = new FormGroup({
+      title: new FormControl(null, { validators: [Validators.required] }),
+      content: new FormControl(null, { validators: [Validators.required] })
+    });
+  }
+
+  initializeForm() {
     this.route.paramMap.subscribe((paramMap) => {
       if(paramMap.has('id')) {
-        this.mode = 'edit';
-        this.postId = paramMap.get('id');
-        this.isLoading = true;
-        this.postsService.getPost(this.postId)
-          .subscribe(post => {
-            this.post = post;
-            this.isLoading = false;
-          });
+        this.setEditMode(paramMap);
       } else {
-        this.mode = 'create';
-        this.postId = null;
+        this.setCreateMode();
       }
     });
   }
 
-  onSubmitClick(form: NgForm) {
-    if(form.invalid) return;
+  setEditMode(paramMap: ParamMap) {
+    this.mode = 'edit';
+    this.postId = paramMap.get('id');
+    this.isLoading = true;
+    this.postsService.getPost(this.postId)
+      .subscribe(post => {
+        this.post = post;
+        this.isLoading = false;
+        this.form.setValue({
+          title: this.post.title,
+          content: this.post.content
+        });
+      });
+  }
+
+  setCreateMode() {
+    this.mode = 'create';
+    this.postId = null;
+  }
+
+  onSubmitClick() {
+    if(this.form.invalid) return;
 
     this.isLoading = true;
     
     if(this.mode === 'create') {
-      this.addPost(form);
+      this.addPost();
     } else {
-      this.updatePost(form);
+      this.updatePost();
     }
 
-    form.resetForm();
-    this.router.navigate(['/']);
+    this.form.reset();
   }
 
-  addPost(form: NgForm) {
+  addPost() {
     const post: Post = {
       id: null,
-      title: form.value.enteredTitle,
-      content: form.value.enteredContent
+      title: this.form.value.title,
+      content: this.form.value.content
     };
 
     this.postsService.addPost(post);
   }
 
-  updatePost(form: NgForm) {
+  updatePost() {
     const post: Post = {
       id: this.post.id,
-      title: form.value.enteredTitle,
-      content: form.value.enteredContent
+      title: this.form.value.title,
+      content: this.form.value.content
     };
 
     this.postsService.updatePost(post);
