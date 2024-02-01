@@ -53,11 +53,12 @@ export class PostsService {
 
     this.httpClient.put<{message: string}>(`http://localhost:3000/api/posts/${post.id}`, updatedPost)
       .subscribe((resp) => {
-        const oldPostIndex = this.posts.findIndex((post) => post.id === updatedPost.id);
-        const tempPosts = [...this.posts];
-        tempPosts[oldPostIndex] = updatedPost;
-        this.posts = tempPosts; //immutable way of updating the posts
-        this.updatedPosts.next([...this.posts]);
+        /* --- This is not really needed because the list component will call all the posts again anyway ---*/
+        // const oldPostIndex = this.posts.findIndex((post) => post.id === updatedPost.id);
+        // const tempPosts = [...this.posts];
+        // tempPosts[oldPostIndex] = updatedPost;
+        // this.posts = tempPosts; //immutable way of updating the posts
+        // this.updatedPosts.next([...this.posts]);
       });
   }
 
@@ -72,7 +73,15 @@ export class PostsService {
   }
 
   getPost(id: string) {
-    return {...this.posts.find((post) => post.id === id)}
+    return this.httpClient.get<{message: string, post: any}>(`http://localhost:3000/api/posts/${id}`)
+      .pipe(map((respData => {
+        return {
+          id: respData.post._id,
+          title: respData.post.title,
+          content: respData.post.content
+        }
+      }))
+      );
   }
 
   private mapPostResponse(postItem: any) {

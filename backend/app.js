@@ -40,6 +40,27 @@ app.get('/api/posts', (req, res, next) => {
         );
 });
 
+app.get('/api/posts/:id', (req, res, next) => {
+    Post.findById(req.params.id)
+        .then((data) => {
+            if(data) {
+                res.status(200).json({
+                    message: 'Get Posts Successful',
+                    post: data
+                });
+            } else {
+                res.status(404).json({
+                    message: 'Post not found!',
+                });
+            }
+
+        })
+        .catch((err) => res.status(500).json({
+            message: 'Error when trying to fetch post based on id: ' + err
+            })
+        );
+});
+
 app.post('/api/posts', (req, res, next) => {
     const post = new Post({
         title: req.body.title,
