@@ -10,7 +10,7 @@
                 #title="ngModel" 
                 type="text" 
                 name="enteredTitle" 
-                [ngModel]="post.title" 
+                [ngModel]="post?.title" 
                 required>
             <mat-error *ngIf="title.invalid">Please enter a title</mat-error>
         </mat-form-field>  
@@ -21,7 +21,7 @@
                 #content="ngModel" 
                 rows="5" 
                 name="enteredContent" 
-                [ngModel]="post.content" 
+                [ngModel]="post?.content" 
                 required>
             </textarea>
             <mat-error *ngIf="content.invalid">Please enter content</mat-error>
@@ -31,4 +31,7 @@
             type="submit">Save Post
         </button>
     </form>
+</mat-card>
+<mat-card *ngIf="showPostSavedMessage">
+    <p>Post Updated!</p>
 </mat-card>

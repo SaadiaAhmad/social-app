@@ -53,9 +53,11 @@ export class PostsService {
 
     this.httpClient.put<{message: string}>(`http://localhost:3000/api/posts/${post.id}`, updatedPost)
       .subscribe((resp) => {
-        // updatedPost.id = resp.id;
-        // this.posts.push(updatedPost);
-        // this.updatedPosts.next([...this.posts]);
+        const oldPostIndex = this.posts.findIndex((post) => post.id === updatedPost.id);
+        const tempPosts = [...this.posts];
+        tempPosts[oldPostIndex] = updatedPost;
+        this.posts = tempPosts; //immutable way of updating the posts
+        this.updatedPosts.next([...this.posts]);
       });
   }
 

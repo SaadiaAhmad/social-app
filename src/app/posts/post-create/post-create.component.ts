@@ -13,6 +13,7 @@ export class PostCreateComponent implements OnInit {
   private mode = 'create';
   private postId: string;
   post: Post;
+  showPostSavedMessage = false;
 
   constructor(private postsService: PostsService, private route: ActivatedRoute) {}
 
@@ -34,11 +35,11 @@ export class PostCreateComponent implements OnInit {
 
     if(this.mode === 'create') {
       this.addPost(form);
+      form.resetForm();
     } else {
       this.updatePost(form);
+      this.showPostSavedMessage = true;
     }
-
-    form.resetForm();
   }
 
   addPost(form: NgForm) {
@@ -49,7 +50,6 @@ export class PostCreateComponent implements OnInit {
     };
 
     this.postsService.addPost(post);
-    form.resetForm();
   }
 
   updatePost(form: NgForm) {
