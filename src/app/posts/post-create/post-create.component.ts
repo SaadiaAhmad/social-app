@@ -3,6 +3,7 @@ import { Post } from '../posts.model';
 import { NgForm } from '@angular/forms';
 import { PostsService } from '../posts.service';
 import { ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-post-create',
@@ -13,9 +14,8 @@ export class PostCreateComponent implements OnInit {
   private mode = 'create';
   private postId: string;
   post: Post;
-  showPostSavedMessage = false;
 
-  constructor(private postsService: PostsService, private route: ActivatedRoute) {}
+  constructor(private postsService: PostsService, private route: ActivatedRoute, private router: Router) {}
 
   ngOnInit(): void {
     this.route.paramMap.subscribe((paramMap) => {
@@ -35,11 +35,12 @@ export class PostCreateComponent implements OnInit {
 
     if(this.mode === 'create') {
       this.addPost(form);
-      form.resetForm();
     } else {
       this.updatePost(form);
-      this.showPostSavedMessage = true;
     }
+
+    form.resetForm();
+    this.router.navigate(['/']);
   }
 
   addPost(form: NgForm) {
