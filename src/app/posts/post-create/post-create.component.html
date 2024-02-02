@@ -30,6 +30,9 @@
         <div class="image-preview" *ngIf="imagePreview && form.get('image').valid">
             <img [src]="imagePreview" [alt]="form.value.title">
         </div>
+        <div class="edit-image-preview" *ngIf="post.imagePath && !imagePreview">
+            <img [src]="post.imagePath" [alt]="form.value.title">
+        </div>
         <button mat-raised-button 
             color="primary" 
             type="submit">Save Post

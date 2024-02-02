@@ -43,7 +43,7 @@ router.get('/:id', (req, res, next) => {
         .then((data) => {
             if(data) {
                 res.status(200).json({
-                    message: 'Get Posts Successful',
+                    message: 'Get Post by Id Successful',
                     post: data
                 });
             } else {
@@ -81,11 +81,13 @@ router.post('', multer({storage}).single("image"), (req, res, next) => {
         )
 });
 
-router.put('/:id', (req, res, next) => {
+router.put('/:id', multer({storage}).single("image"), (req, res, next) => {
+    const url = req.protocol + "://" + req.get("host");
     const post = new Post({
         _id: req.params.id,
         title: req.body.title,
-        content: req.body.content
+        content: req.body.content,
+        imagePath: req.file?.filename ? url + "/images/" + req.file?.filename : req.body.imagePath
     });
 
     Post.updateOne({ _id: req.params.id }, post)

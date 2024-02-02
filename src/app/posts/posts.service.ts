@@ -38,34 +38,44 @@ export class PostsService {
 
     this.httpClient.post<{message: string, post: Post}>('http://localhost:3000/api/posts', postFormData)
       .subscribe((resp) => {
-        const newPost: Post = {
-          id: resp.post.id,
-          title: post.title,
-          content: post.content,
-          imagePath: resp.post.imagePath
-        };
-        this.posts.push(newPost);
-        this.updatedPosts.next([...this.posts]);
+        /* --- This is not really needed because the post-list component will call all the posts again anyway ---*/
+        // const newPost: Post = {
+        //   id: resp.post.id,
+        //   title: post.title,
+        //   content: post.content,
+        //   imagePath: resp.post.imagePath
+        // };
+        // this.posts.push(newPost);
+        // this.updatedPosts.next([...this.posts]);
         this.router.navigate(['/']);
       });
   }
 
-  updatePost(post: Post) {
-    const updatedPost: Post = {
-      id: post.id,
-      title: post.title,
-      content: post.content
-    };
+  updatePost(post: Post, image: File) {
+    let updatedPost: FormData | Post;
+    if(image) {
+      updatedPost = new FormData();
+      updatedPost.append("title", post.title);
+      updatedPost.append("content", post.content);
+      updatedPost.append("image", image, post.title);
+    } else {
+      updatedPost = {
+        id: post.id,
+        title: post.title,
+        content: post.content,
+        imagePath: post.imagePath
+      };
+    }
 
     this.httpClient.put<{message: string}>(`http://localhost:3000/api/posts/${post.id}`, updatedPost)
       .subscribe((resp) => {
-        this.router.navigate(['/']);
-        /* --- This is not really needed because the list component will call all the posts again anyway ---*/
+        /* --- This is not really needed because the post-list component will call all the posts again anyway ---*/
         // const oldPostIndex = this.posts.findIndex((post) => post.id === updatedPost.id);
         // const tempPosts = [...this.posts];
         // tempPosts[oldPostIndex] = updatedPost;
         // this.posts = tempPosts; //immutable way of updating the posts
         // this.updatedPosts.next([...this.posts]);
+        this.router.navigate(['/']);
       });
   }
 

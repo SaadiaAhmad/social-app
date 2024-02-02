@@ -53,7 +53,8 @@ export class PostCreateComponent implements OnInit {
         this.isLoading = false;
         this.form.setValue({
           title: this.post.title,
-          content: this.post.content
+          content: this.post.content,
+          image: null //This resets the image on the form which is fine because the image form control is not tied to any html element
         });
       });
   }
@@ -89,12 +90,12 @@ export class PostCreateComponent implements OnInit {
 
   updatePost() {
     const post: Post = {
-      id: this.post.id,
+      ...this.post,
       title: this.form.value.title,
       content: this.form.value.content
     };
 
-    this.postsService.updatePost(post);
+    this.postsService.updatePost(post, this.form.value.image);
   }
 
   onImagePicked(event: Event) {
