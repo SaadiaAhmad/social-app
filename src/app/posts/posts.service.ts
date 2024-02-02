@@ -38,15 +38,6 @@ export class PostsService {
 
     this.httpClient.post<{message: string, post: Post}>('http://localhost:3000/api/posts', postFormData)
       .subscribe((resp) => {
-        /* --- This is not really needed because the post-list component will call all the posts again anyway ---*/
-        // const newPost: Post = {
-        //   id: resp.post.id,
-        //   title: post.title,
-        //   content: post.content,
-        //   imagePath: resp.post.imagePath
-        // };
-        // this.posts.push(newPost);
-        // this.updatedPosts.next([...this.posts]);
         this.router.navigate(['/']);
       });
   }
@@ -69,12 +60,6 @@ export class PostsService {
 
     this.httpClient.put<{message: string}>(`http://localhost:3000/api/posts/${post.id}`, updatedPost)
       .subscribe((resp) => {
-        /* --- This is not really needed because the post-list component will call all the posts again anyway ---*/
-        // const oldPostIndex = this.posts.findIndex((post) => post.id === updatedPost.id);
-        // const tempPosts = [...this.posts];
-        // tempPosts[oldPostIndex] = updatedPost;
-        // this.posts = tempPosts; //immutable way of updating the posts
-        // this.updatedPosts.next([...this.posts]);
         this.router.navigate(['/']);
       });
   }
