@@ -64,7 +64,7 @@ router.post('', multer({storage}).single("image"), (req, res, next) => {
     const post = new Post({
         title: req.body.title,
         content: req.body.content,
-        imagePath: url + "/images/" + req.file.filename
+        imagePath: req.file?.filename ? url + "/images/" + req.file?.filename : null
     });
 
     post.save()

@@ -34,7 +34,7 @@ export class PostsService {
     const postFormData = new FormData();
     postFormData.append("title", post.title);
     postFormData.append("content", post.content);
-    postFormData.append("image", image, post.title);
+    if(image) postFormData.append("image", image, post.title);
 
     this.httpClient.post<{message: string, post: Post}>('http://localhost:3000/api/posts', postFormData)
       .subscribe((resp) => {
@@ -85,7 +85,8 @@ export class PostsService {
         return {
           id: respData.post._id,
           title: respData.post.title,
-          content: respData.post.content
+          content: respData.post.content,
+          imagePath: respData.post.imagePath
         }
       }))
       );

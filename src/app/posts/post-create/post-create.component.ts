@@ -29,7 +29,7 @@ export class PostCreateComponent implements OnInit {
     this.form = new FormGroup({
       title: new FormControl(null, { validators: [Validators.required] }),
       content: new FormControl(null, { validators: [Validators.required] }),
-      image: new FormControl(null, { validators: [Validators.required], asyncValidators: [mimeTypeValidator] })
+      image: new FormControl(null, { asyncValidators: [mimeTypeValidator] })
     });
   }
 
