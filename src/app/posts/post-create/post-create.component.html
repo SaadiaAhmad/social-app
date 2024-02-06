@@ -21,7 +21,7 @@
             </textarea>
             <mat-error *ngIf="form.get('content').invalid">Please enter content</mat-error>
         </mat-form-field>
-        <div>
+        <div class="image-picker">
             <button mat-stroked-button type="button" color="accent" (click)="filePicker.click()">
                 Pick Image
             </button>
@@ -30,7 +30,7 @@
         <div class="image-preview" *ngIf="imagePreview && form.get('image').valid">
             <img [src]="imagePreview" [alt]="form.value.title">
         </div>
-        <div class="edit-image-preview" *ngIf="post.imagePath && !imagePreview">
+        <div class="edit-image-preview" *ngIf="post?.imagePath && !imagePreview">
             <img [src]="post.imagePath" [alt]="form.value.title">
         </div>
         <button mat-raised-button 
