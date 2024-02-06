@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Post } from './posts.model';
+import { Post, PostData } from './posts.model';
 import { Subject, map } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
@@ -9,21 +9,24 @@ import { Router } from '@angular/router';
 })
 export class PostsService {
   private posts: Post[] = [];
-  private updatedPosts = new Subject<Post[]>();
+  private updatedPosts = new Subject<PostData>();
 
   constructor(private httpClient: HttpClient, private router: Router) {}
 
   getPosts(pageSize: number, currentPage: number) {
     const queryParams = `?pagesize=${pageSize}&page=${currentPage}`;
-    this.httpClient.get<{message: string, posts: Post[]}>('http://localhost:3000/api/posts' + queryParams)
+    this.httpClient.get<{message: string, posts: Post[], totalPosts: number}>('http://localhost:3000/api/posts' + queryParams)
       .pipe(
         map((resp) => {
-          return resp.posts.map((postItem) => this.mapPostResponse(postItem));
+          return {
+            totalPosts: resp.totalPosts,
+            posts: resp.posts.map((postItem) => this.mapPostResponse(postItem))
+          };
         })
       )
-      .subscribe((mappedPosts) => {
-        this.posts = mappedPosts;
-        this.updatedPosts.next([...this.posts]);
+      .subscribe((mappedPostData) => {
+        this.posts = mappedPostData.posts;
+        this.updatedPosts.next({posts: [...this.posts], postCount: mappedPostData.totalPosts});
       });
   }
 
@@ -66,13 +69,7 @@ export class PostsService {
   }
 
   deletePost(postId: string) {
-    this.httpClient.delete<{message: string}>(`http://localhost:3000/api/posts/${postId}`)
-    .subscribe((resp) => {
-      const deletedItemIndex = this.posts.findIndex((post) => post.id === postId);
-      this.posts.splice(deletedItemIndex, 1);
-      //const postsUpdated = this.posts.filter(post => post.id !== postId); //This will not work when we delete more than one posts in one go/app load
-      this.updatedPosts.next([...this.posts]);
-    });
+    return this.httpClient.delete<{message: string}>(`http://localhost:3000/api/posts/${postId}`);
   }
 
   getPost(id: string) {

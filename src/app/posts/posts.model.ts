@@ -4,3 +4,8 @@ export interface Post {
     content: string;
     imagePath?: string;
 }
+
+export interface PostData {
+    posts: Post[],
+    postCount: number
+}
