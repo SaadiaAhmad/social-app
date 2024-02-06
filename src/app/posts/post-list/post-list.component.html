@@ -15,6 +15,12 @@
     </mat-expansion-panel>
 </mat-accordion>
 
+<mat-paginator 
+    [length]="totalPosts" 
+    [pageSize]="postsPerPage" 
+    [pageSizeOptions]="pageSizes"
+    (page)="onPageChange($event)"></mat-paginator>
+
 <ng-template #noPosts>
     <ng-container *ngIf="isLoading">
         <p>Loading...</p>
