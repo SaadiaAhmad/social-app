@@ -10,4 +10,10 @@ ul {
 a {
     text-decoration: none;
     color: white;
+    display: inline-flex;
+    align-items: center;
+
+    mat-icon {
+        padding: 0 0 4px 4px;
+    }
 }

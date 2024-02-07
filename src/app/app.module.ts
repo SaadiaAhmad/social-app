@@ -18,6 +18,7 @@ import { RouterModule } from '@angular/router';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { LoginComponent } from './auth/login/login/login.component';
+import { SignupComponent } from './auth/signup/signup/signup.component';
 
 @NgModule({
   imports: [ 
@@ -42,7 +43,8 @@ import { LoginComponent } from './auth/login/login/login.component';
     PostCreateComponent,
     HeaderComponent,
     PostListComponent,
-    LoginComponent
+    LoginComponent,
+    SignupComponent
   ],
   bootstrap: [AppComponent]
 })

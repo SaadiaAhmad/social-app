@@ -4,13 +4,18 @@
     </button> -->
     <ul>
       <li>
-        <a routerLink="/">My Posts</a>
+        <a routerLink="/">My Posts
+          <mat-icon>home</mat-icon>
+        </a>
       </li>
       <li>
-        <a mat-raised-button routerLink="/create" color="accent">New Post</a>
+        <a mat-stroked-button routerLink="/create" color="accent" routerLinkActive="mat-accent">New Post</a>
       </li>
       <li>
-        <a mat-raised-button routerLink="/login" color="primary">Login</a>
+        <a mat-stroked-button routerLink="/login"  color="accent" routerLinkActive="mat-accent">Login</a>
+      </li>
+      <li>
+        <a mat-stroked-button routerLink="/signup"  color="accent" routerLinkActive="mat-accent">Signup</a>
       </li>
     </ul>
     <!-- <span class="example-spacer"></span>
