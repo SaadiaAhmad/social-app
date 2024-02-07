@@ -1,0 +1,35 @@
+<mat-card>
+    <mat-spinner *ngIf="isLoading"></mat-spinner>
+    <!-- Using a template-driven form here. This is diferent than a reactive form. -->
+    <!-- Reactive forms are synchronous and use observables whereas  -->
+    <!-- Template forms are asynchronous and use direct access to the data using directives -->
+    <form *ngIf="!isLoading" #loginForm="ngForm" (submit)="onLoginClick(loginForm)">
+        <mat-form-field>
+            <mat-label>User Email</mat-label>
+            <input 
+                matInput
+                type="email"
+                name="email"
+                ngModel
+                #emailInput="ngModel"
+                required
+                email>
+            <mat-error *ngIf="emailInput.invalid">Please enter a valid email</mat-error>
+        </mat-form-field>  
+        <mat-form-field>
+            <mat-label>Password</mat-label>
+            <input 
+                matInput 
+                type="password"
+                name="password"
+                ngModel
+                #passwordInput="ngModel"
+                required>
+            <mat-error *ngIf="passwordInput.invalid">Please enter a valid password</mat-error>
+        </mat-form-field>
+        <button mat-raised-button 
+            color="primary" 
+            type="submit">Login
+        </button>
+    </form>
+</mat-card>
