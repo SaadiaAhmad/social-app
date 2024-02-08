@@ -6,8 +6,13 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root'
 })
 export class AuthService {
+  private token: string;
 
   constructor(private httpClient: HttpClient) { }
+
+  getToken(): string {
+    return this.token;
+  }
 
   createUser(user: User) {
     this.httpClient.post('http://localhost:3000/api/user/signup', user)
@@ -15,7 +20,9 @@ export class AuthService {
   }
 
   loginUser(user: User) {
-    this.httpClient.post('http://localhost:3000/api/user/login', user)
-    .subscribe(data => console.log("Login: ", data));
+    this.httpClient.post<{ message: string, token: string }>('http://localhost:3000/api/user/login', user)
+    .subscribe(data => {
+      this.token = data.token;
+    });
   }
 }
