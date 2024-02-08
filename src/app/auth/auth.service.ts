@@ -9,6 +9,7 @@ import { Router } from '@angular/router';
 })
 export class AuthService {
   private token: string;
+  private tokenTimer: any;
   private isAuthenticated = false;
   private authStatus$ = new Subject<boolean>();
 
@@ -32,12 +33,12 @@ export class AuthService {
   }
 
   loginUser(user: User) {
-    this.httpClient.post<{ message: string, token: string }>('http://localhost:3000/api/user/login', user)
+    this.httpClient.post<{ message: string, token: string, expiresIn: number }>('http://localhost:3000/api/user/login', user)
     .subscribe(data => {
       this.token = data.token;
       if(this.token) {
-        this.isAuthenticated = true;
-        this.authStatus$.next(true);
+        this.setAuthenticationFlags(true);
+        this.setTokenTimer(data.expiresIn);
         this.navigateToHomepage();
       }
     });
@@ -45,12 +46,23 @@ export class AuthService {
 
   logout() {
     this.token = null;
-    this.isAuthenticated = false;
-    this.authStatus$.next(false);
+    clearTimeout(this.tokenTimer);
+    this.setAuthenticationFlags(false);
     this.navigateToHomepage();
   }
 
-  navigateToHomepage() {
+  private setAuthenticationFlags(val: boolean) {
+    this.isAuthenticated = val;
+    this.authStatus$.next(val);
+  }
+
+  private navigateToHomepage() {
     this.router.navigate(['/']);
+  }
+
+  private setTokenTimer(expiresInDuration: number) {
+    this.tokenTimer = setTimeout(() => {
+      this.logout();
+    }, expiresInDuration * 1000);
   }
 }
