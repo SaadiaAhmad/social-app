@@ -51,6 +51,10 @@ router.post("/login", (req, res, next) => {
                 { email: req.body.email, userId: userMatch._id }, 
                 'secret_should_be_longer_than_this',
                 { expiresIn: '1h' });
+            res.status(200).json({
+                message: 'Login successful!',
+                token: token
+            });
         })
         .catch(err => {
             res.status(401).json({

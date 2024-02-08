@@ -11,6 +11,11 @@ export class AuthService {
 
   createUser(user: User) {
     this.httpClient.post('http://localhost:3000/api/user/signup', user)
-      .subscribe();
+      .subscribe(data => console.log("Signup: ", data));
+  }
+
+  loginUser(user: User) {
+    this.httpClient.post('http://localhost:3000/api/user/login', user)
+    .subscribe(data => console.log("Login: ", data));
   }
 }
