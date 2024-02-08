@@ -19,7 +19,7 @@
           <a mat-stroked-button routerLink="/signup"  color="accent" routerLinkActive="mat-accent">Signup</a>
         </li>
         <li *ngIf="isUserAuthenticated">
-          <button mat-stroked-button color="accent">Logout</button>
+          <button mat-stroked-button color="accent" (click)="onLogout()">Logout</button>
         </li>
       </ul>
     </div>
