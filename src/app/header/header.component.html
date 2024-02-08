@@ -2,22 +2,28 @@
     <!-- <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon">
         <mat-icon>menu</mat-icon>
     </button> -->
-    <ul>
-      <li>
-        <a routerLink="/">My Posts
-          <mat-icon>home</mat-icon>
-        </a>
-      </li>
-      <li>
-        <a mat-stroked-button routerLink="/create" color="accent" routerLinkActive="mat-accent">New Post</a>
-      </li>
-      <li>
-        <a mat-stroked-button routerLink="/login"  color="accent" routerLinkActive="mat-accent">Login</a>
-      </li>
-      <li>
-        <a mat-stroked-button routerLink="/signup"  color="accent" routerLinkActive="mat-accent">Signup</a>
-      </li>
-    </ul>
+    <div class="header">
+      <a routerLink="/">
+        <mat-icon>home</mat-icon>
+        <span>My Posts</span>
+      </a>
+
+      <ul>
+        <li *ngIf="isUserAuthenticated">
+          <a mat-stroked-button routerLink="/create" color="accent" routerLinkActive="mat-accent">New Post</a>
+        </li>
+        <li *ngIf="!isUserAuthenticated">
+          <a mat-stroked-button routerLink="/login"  color="accent" routerLinkActive="mat-accent">Login</a>
+        </li>
+        <li *ngIf="!isUserAuthenticated">
+          <a mat-stroked-button routerLink="/signup"  color="accent" routerLinkActive="mat-accent">Signup</a>
+        </li>
+        <li *ngIf="isUserAuthenticated">
+          <button mat-stroked-button color="accent">Logout</button>
+        </li>
+      </ul>
+    </div>
+
     <!-- <span class="example-spacer"></span>
     <button mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon">
       <mat-icon>favorite</mat-icon>
