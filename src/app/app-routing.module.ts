@@ -4,19 +4,22 @@ import { PostCreateComponent } from './posts/post-create/post-create.component';
 import { PostListComponent } from './posts/post-list/post-list.component';
 import { LoginComponent } from './auth/login/login/login.component';
 import { SignupComponent } from './auth/signup/signup/signup.component';
+import { AuthGuard } from './auth/auth.guard';
 
 const routes: Routes = [
     {
         path: '',
-        component: PostListComponent
+        component: PostListComponent,
     },
     {
         path: 'create',
-        component: PostCreateComponent
+        component: PostCreateComponent,
+        canActivate: [AuthGuard]
     },
     {
         path: 'edit/:id',
-        component: PostCreateComponent
+        component: PostCreateComponent,
+        canActivate: [AuthGuard]
     },
     {
         path: 'login',
@@ -29,7 +32,8 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [ RouterModule.forRoot(routes) ]
+  imports: [ RouterModule.forRoot(routes) ],
+  providers: [ AuthGuard ]
 })
 export class AppRoutingModule {
 
