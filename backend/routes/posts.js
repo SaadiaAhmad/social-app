@@ -81,7 +81,8 @@ router.post('', checkAuth, multer({storage}).single("image"), (req, res, next) =
     const post = new Post({
         title: req.body.title,
         content: req.body.content,
-        imagePath: req.file?.filename ? url + "/images/" + req.file?.filename : null
+        imagePath: req.file?.filename ? url + "/images/" + req.file?.filename : null,
+        owner: req.userData.userId
     });
 
     post.save()

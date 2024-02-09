@@ -85,7 +85,7 @@ export class PostsService {
       );
   }
 
-  private mapPostResponse(postItem: any) {
+  private mapPostResponse(postItem: any): Post {
     return {
       id: postItem._id,
       title: postItem.title,
