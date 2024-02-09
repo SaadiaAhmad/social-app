@@ -108,11 +108,18 @@ router.put('/:id', checkAuth, multer({storage}).single("image"), (req, res, next
         imagePath: req.file?.filename ? url + "/images/" + req.file?.filename : req.body.imagePath
     });
 
-    Post.updateOne({ _id: req.params.id }, post)
-        .then((resp) => res.status(200).json({
-            message: 'Post updated!'
-            })
-        )
+    Post.updateOne({ _id: req.params.id, owner: req.userData.userId }, post)
+        .then((resp) => {
+            if(resp.modifiedCount > 0) {
+                res.status(200).json({
+                    message: 'Post updated!'
+                });
+            } else {
+                res.status(401).json({
+                    message: 'User Unauthorized!'
+                });
+            }
+        })
         .catch((err) => res.status(500).json({
             message: 'Error when trying to update post: ' + err
             })
@@ -120,11 +127,18 @@ router.put('/:id', checkAuth, multer({storage}).single("image"), (req, res, next
 });
 
 router.delete('/:id', checkAuth, (req, res) => {
-    Post.deleteOne({ _id: req.params.id })
-        .then((resp) => res.status(200).json({
-                message: 'Post deleted!'
-            })
-        )
+    Post.deleteOne({ _id: req.params.id, owner: req.userData.userId })
+        .then((resp) => {
+            if(resp.deletedCount > 0) {
+                res.status(200).json({
+                    message: 'Post deleted!'
+                });
+            } else {
+                res.status(401).json({
+                    message: 'User Unauthorized!'
+                });
+            }
+        })
         .catch((err) => res.status(500).json({
             message: 'Error when trying to delete: ' + err
             })
