@@ -105,7 +105,8 @@ router.put('/:id', checkAuth, multer({storage}).single("image"), (req, res, next
         _id: req.params.id,
         title: req.body.title,
         content: req.body.content,
-        imagePath: req.file?.filename ? url + "/images/" + req.file?.filename : req.body.imagePath
+        imagePath: req.file?.filename ? url + "/images/" + req.file?.filename : req.body.imagePath,
+        owner: req.userData.userId
     });
 
     Post.updateOne({ _id: req.params.id, owner: req.userData.userId }, post)

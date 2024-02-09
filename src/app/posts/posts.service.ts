@@ -55,10 +55,9 @@ export class PostsService {
       updatedPost.append("image", image, post.title);
     } else {
       updatedPost = {
-        id: post.id,
+        ...post,
         title: post.title,
         content: post.content,
-        imagePath: post.imagePath
       };
     }
 
@@ -79,7 +78,8 @@ export class PostsService {
           id: respData.post._id,
           title: respData.post.title,
           content: respData.post.content,
-          imagePath: respData.post.imagePath
+          imagePath: respData.post.imagePath,
+          owner: respData.post.owner
         }
       }))
       );
@@ -90,7 +90,8 @@ export class PostsService {
       id: postItem._id,
       title: postItem.title,
       content: postItem.content,
-      imagePath: postItem.imagePath
+      imagePath: postItem.imagePath,
+      owner: postItem.owner
   }
   }
 }

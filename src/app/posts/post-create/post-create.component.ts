@@ -82,7 +82,8 @@ export class PostCreateComponent implements OnInit {
     const post: Post = {
       id: null,
       title: this.form.value.title,
-      content: this.form.value.content
+      content: this.form.value.content,
+      owner: null
     };
 
     this.postsService.addPost(post, this.form.value.image);
