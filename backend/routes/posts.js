@@ -50,7 +50,10 @@ router.get('', (req, res, next) => {
             });
         })
         .catch((err) => res.status(500).json({
-            message: 'Error when trying to fetch posts: ' + err
+            error: {
+                message: 'Error when trying to fetch posts.',
+                ...err
+            }
             })
         );
 });
@@ -65,13 +68,18 @@ router.get('/:id', (req, res, next) => {
                 });
             } else {
                 res.status(404).json({
-                    message: 'Post not found!',
+                    error: {
+                        message: 'Post not found!',
+                    }
                 });
             }
 
         })
         .catch((err) => res.status(500).json({
-            message: 'Error when trying to fetch post based on id: ' + err
+            error: {
+                message: 'Error when trying to fetch post based on id.',
+                ...err
+            }
             })
         );
 });
@@ -94,7 +102,10 @@ router.post('', checkAuth, multer({storage}).single("image"), (req, res, next) =
             }
         }))
         .catch((err) => res.status(500).json({
-            message: 'Error when trying to create post: ' + err
+            error: {
+                message: 'Error when trying to create post.',
+                ...err
+            }
             })
         )
 });
@@ -117,12 +128,16 @@ router.put('/:id', checkAuth, multer({storage}).single("image"), (req, res, next
                 });
             } else {
                 res.status(401).json({
-                    message: 'User Unauthorized!'
+                    error: {
+                        message: 'User Unauthorized!'
+                    }
                 });
             }
         })
         .catch((err) => res.status(500).json({
-            message: 'Error when trying to update post: ' + err
+            error: {
+                message: 'Error when trying to update post: ' + err
+            }
             })
         )
 });
@@ -136,12 +151,17 @@ router.delete('/:id', checkAuth, (req, res) => {
                 });
             } else {
                 res.status(401).json({
-                    message: 'User Unauthorized!'
+                    error: {
+                        message: 'User Unauthorized!'
+                    }
                 });
             }
         })
         .catch((err) => res.status(500).json({
-            message: 'Error when trying to delete: ' + err
+            error: {
+                message: 'Error when trying to delete post.',
+                ...err
+            }
             })
         );
 });
