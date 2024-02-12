@@ -51,21 +51,27 @@ export class AuthService {
 
   createUser(user: User) {
     this.httpClient.post('http://localhost:3000/api/user/signup', user)
-      .subscribe(data => console.log("Signup: ", data));
+      .subscribe(
+        data => this.navigateToLoginPage(),
+        error => this.authStatus$.next(false)
+      );
   }
 
   loginUser(user: User) {
     this.httpClient.post<{ message: string, token: string, expiresIn: number, userId: string }>('http://localhost:3000/api/user/login', user)
-    .subscribe(data => {
-      this.token = data.token;
-      if(this.token) {
-        this.userId = data.userId;
-        this.setAuthenticationFlags(true);
-        this.setTokenTimer(data.expiresIn);
-        this.saveAuthData(this.token, this.generateExpirationDatetime(data.expiresIn), this.userId);
-        this.navigateToHomepage();
-      }
-    });
+    .subscribe(
+      data => {
+        this.token = data.token;
+        if(this.token) {
+          this.userId = data.userId;
+          this.setAuthenticationFlags(true);
+          this.setTokenTimer(data.expiresIn);
+          this.saveAuthData(this.token, this.generateExpirationDatetime(data.expiresIn), this.userId);
+          this.navigateToHomepage();
+        }
+      },
+      error => this.authStatus$.next(false)
+    );
   }
 
   logout() {
@@ -84,6 +90,10 @@ export class AuthService {
 
   private navigateToHomepage() {
     this.router.navigate(['/']);
+  }
+
+  private navigateToLoginPage() {
+    this.router.navigate(['/login']);
   }
 
   private setTokenTimer(duration: number) {
