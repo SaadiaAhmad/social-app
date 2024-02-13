@@ -8,7 +8,7 @@ const userRoutes = require('./routes/user');
 
 const app = express();
 
-const mongoDBUri = 'mongodb+srv://saadia:dtukhogyi9QMWsQ5@cluster0.7i5apjg.mongodb.net/node-angular?retryWrites=true&w=majority';
+const mongoDBUri = `mongodb+srv://saadia:${process.env.MONGO_ATLAS_PWD}@cluster0.7i5apjg.mongodb.net/node-angular?retryWrites=true&w=majority`;
 mongoose.connect(mongoDBUri)
 .then(() => console.log('Connected to database!'))
 .catch((error) => console.log('Connection failed: ', error));
