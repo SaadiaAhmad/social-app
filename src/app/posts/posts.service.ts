@@ -4,6 +4,8 @@ import { Subject, map } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 
+const POST_API_BASE_PATH = 'http://localhost:3000/api/posts';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -15,7 +17,7 @@ export class PostsService {
 
   getPosts(pageSize: number, currentPage: number) {
     const queryParams = `?pagesize=${pageSize}&page=${currentPage}`;
-    this.httpClient.get<{message: string, posts: Post[], totalPosts: number}>('http://localhost:3000/api/posts' + queryParams)
+    this.httpClient.get<{message: string, posts: Post[], totalPosts: number}>(POST_API_BASE_PATH + queryParams)
       .pipe(
         map((resp) => {
           return {
@@ -40,7 +42,7 @@ export class PostsService {
     postFormData.append("content", post.content);
     if(image) postFormData.append("image", image, post.title);
 
-    this.httpClient.post<{message: string, post: Post}>('http://localhost:3000/api/posts', postFormData)
+    this.httpClient.post<{message: string, post: Post}>(POST_API_BASE_PATH, postFormData)
       .subscribe((resp) => {
         this.router.navigate(['/']);
       });
@@ -61,18 +63,18 @@ export class PostsService {
       };
     }
 
-    this.httpClient.put<{message: string}>(`http://localhost:3000/api/posts/${post.id}`, updatedPost)
+    this.httpClient.put<{message: string}>(`${POST_API_BASE_PATH}/${post.id}`, updatedPost)
       .subscribe((resp) => {
         this.router.navigate(['/']);
       });
   }
 
   deletePost(postId: string) {
-    return this.httpClient.delete<{message: string}>(`http://localhost:3000/api/posts/${postId}`);
+    return this.httpClient.delete<{message: string}>(`${POST_API_BASE_PATH}/${postId}`);
   }
 
   getPost(id: string) {
-    return this.httpClient.get<{message: string, post: any}>(`http://localhost:3000/api/posts/${id}`)
+    return this.httpClient.get<{message: string, post: any}>(`${POST_API_BASE_PATH}/${id}`)
       .pipe(map((respData => {
         return {
           id: respData.post._id,

@@ -4,6 +4,8 @@ import { HttpClient } from '@angular/common/http';
 import { Subject } from 'rxjs';
 import { Router } from '@angular/router';
 
+const USER_API_BASE_PATH = 'http://localhost:3000/api/user';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -50,7 +52,7 @@ export class AuthService {
   }
 
   createUser(user: User) {
-    this.httpClient.post('http://localhost:3000/api/user/signup', user)
+    this.httpClient.post(`${USER_API_BASE_PATH}/signup`, user)
       .subscribe(
         data => this.navigateToLoginPage(),
         error => this.authStatus$.next(false)
@@ -58,7 +60,7 @@ export class AuthService {
   }
 
   loginUser(user: User) {
-    this.httpClient.post<{ message: string, token: string, expiresIn: number, userId: string }>('http://localhost:3000/api/user/login', user)
+    this.httpClient.post<{ message: string, token: string, expiresIn: number, userId: string }>(`${USER_API_BASE_PATH}/login`, user)
     .subscribe(
       data => {
         this.token = data.token;

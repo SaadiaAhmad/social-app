@@ -39,7 +39,7 @@ import { PostsModule } from './posts/posts.module';
       multi: true
     }
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
 export class AppModule {
 

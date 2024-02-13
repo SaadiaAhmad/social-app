@@ -13,7 +13,7 @@ import { AuthRoutingModule } from "./auth-routing.module";
         FormsModule,
         AngularMaterialModule,
         RouterModule,
-        AuthRoutingModule
+        AuthRoutingModule,
     ],
     declarations: [
         LoginComponent,
