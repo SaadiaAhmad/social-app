@@ -101,6 +101,10 @@ exports.updatePost = (req, res, next) => {
                 res.status(200).json({
                     message: 'Post updated!'
                 });
+            } else if(resp.matchedCount > 0) {
+                res.status(204).json({
+                    message: 'Nothing to update!'
+                });
             } else {
                 res.status(401).json({
                     error: {
