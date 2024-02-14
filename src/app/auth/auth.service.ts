@@ -3,8 +3,9 @@ import { User } from './auth-data.model';
 import { HttpClient } from '@angular/common/http';
 import { Subject } from 'rxjs';
 import { Router } from '@angular/router';
+import { environment } from '../../environments/environment';
 
-const USER_API_BASE_PATH = 'http://localhost:3000/api/user';
+const USER_API_BASE_PATH = `${environment.apiBasePath}/user`;
 
 @Injectable({
   providedIn: 'root'

@@ -3,8 +3,9 @@ import { Post, PostData } from './posts.model';
 import { Subject, map } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { environment } from '../../environments/environment';
 
-const POST_API_BASE_PATH = 'http://localhost:3000/api/posts';
+const POST_API_BASE_PATH = `${environment.apiBasePath}/posts`;
 
 @Injectable({
   providedIn: 'root'
