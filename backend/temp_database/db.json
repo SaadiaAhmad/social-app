@@ -1,0 +1,36 @@
+
+
+{
+    "posts": [
+        {
+            "title": "Test 1 using local db",
+            "content": "Some random content",
+            "imagePath": "../images",
+            "owner": "1234"
+        },
+        {
+            "title": "Test 2 using local db",
+            "content": "Some random content",
+            "imagePath": "../images",
+            "owner": "1234"
+        },
+        {
+            "title": "Test 3 using local db",
+            "content": "Some random content",
+            "imagePath": "../images",
+            "owner": "1234"
+        },
+        {
+            "title": "Test 4 using local db",
+            "content": "Some random content",
+            "imagePath": "../images",
+            "owner": "1234"
+        },
+        {
+            "title": "Test 5 using local db",
+            "content": "Some random content",
+            "imagePath": "../images",
+            "owner": "1234"
+        }
+    ]
+}
