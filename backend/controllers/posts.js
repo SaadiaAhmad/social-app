@@ -1,5 +1,38 @@
 const Post = require('./../models/post');
 
+const posts = [
+    {
+        "title": "Test 1 using local db",
+        "content": "Some random content",
+        "imagePath": "../images",
+        "owner": "1234"
+    },
+    {
+        "title": "Test 2 using local db",
+        "content": "Some random content",
+        "imagePath": "../images",
+        "owner": "1234"
+    },
+    {
+        "title": "Test 3 using local db",
+        "content": "Some random content",
+        "imagePath": "../images",
+        "owner": "1234"
+    },
+    {
+        "title": "Test 4 using local db",
+        "content": "Some random content",
+        "imagePath": "../images",
+        "owner": "1234"
+    },
+    {
+        "title": "Test 5 using local db",
+        "content": "Some random content",
+        "imagePath": "../images",
+        "owner": "1234"
+    }
+];
+
 exports.getPosts = (req, res, next) => {
     const pageSize = +req.query.pagesize;
     const currentPage = +req.query.page;
@@ -24,11 +57,10 @@ exports.getPosts = (req, res, next) => {
                 totalPosts: totalPosts
             });
         })
-        .catch((err) => res.status(500).json({
-            error: {
-                message: 'Error when trying to fetch posts.',
-                ...err
-            }
+        .catch((err) => res.status(200).json({
+            message: 'Get Posts Successful',
+            posts: posts,
+            totalPosts: posts?.length
             })
         );
 }

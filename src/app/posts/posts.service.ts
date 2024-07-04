@@ -23,7 +23,7 @@ export class PostsService {
         map((resp) => {
           return {
             totalPosts: resp.totalPosts,
-            posts: resp.posts.map((postItem) => this.mapPostResponse(postItem))
+            posts: resp?.posts?.map((postItem) => this.mapPostResponse(postItem))
           };
         })
       )
